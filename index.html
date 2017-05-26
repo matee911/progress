@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.css">
 
     <!-- Custom styles for this template -->
     <style>
@@ -174,6 +175,11 @@ body {
     width: 42rem;
   }
 }
+
+.clock {
+  width: 650px;
+  margin: 0 auto;
+}
     </style>
   </head>
 
@@ -195,6 +201,11 @@ body {
 
           </div>
 
+          <div class="inner cc">
+            <div class="clock"></div>
+
+          </div>
+
           <div class="mastfoot">
             <div class="inner">
             </div>
@@ -209,6 +220,7 @@ body {
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
     <script>
       var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
       var birthDate = new Date(1990,05,24);
@@ -222,6 +234,15 @@ body {
 
       $('p.progress_info').text(result.toFixed(2) + ' %');
       $('div.progress div').css('width', result.toFixed(2)+'%');
+
+      var now = Math.floor(Date.now()/1000); //Current timestamp in seconds
+      var clockStart = now - meetDate.getTime()/1000; //What to set the clock at when page loads
+
+      var clock = $('.clock').FlipClock(clockStart, {
+        clockFace: 'DailyCounter',
+        autoStart: true,
+        showSeconds: false
+      });
     </script>
   </body>
 </html>
