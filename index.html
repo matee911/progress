@@ -198,6 +198,7 @@ body {
               <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; height: 25px"></div>
             </div>
             <p class="progress_info">100%</p>
+            <p class="last_seen">.</p>
 
           </div>
 
@@ -225,15 +226,18 @@ body {
       var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
       var birthDate = new Date(1990,05,24);
       var meetDate = new Date(2017,00,12,9,00);
+      var lastSeenDate = new Date(2017,11,22,10,20);
       var currentDate = new Date();
 
       var lifeLength = Math.round(Math.abs((birthDate.getTime() - currentDate.getTime())/(oneDay)));
       var diffDays = Math.round(Math.abs((meetDate.getTime() - currentDate.getTime())/(oneDay)));
+      var daysSinceStandup = Math.round(Math.abs((lastSeenDate.getTime() - currentDate.getTime())/(oneDay)));
 
       var result = (diffDays / lifeLength) * 100;
 
       $('p.progress_info').text(result.toFixed(2) + ' %');
       $('div.progress div').css('width', result.toFixed(2)+'%');
+      $('p.last_seen').text(daysSinceStandup.toFixed(0));
 
       var now = Math.floor(Date.now()/1000); //Current timestamp in seconds
       var clockStart = now - meetDate.getTime()/1000; //What to set the clock at when page loads
