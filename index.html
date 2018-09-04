@@ -227,21 +227,34 @@ body {
       var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
       var birthDate = new Date(1990,05,24);
       var meetDate = new Date(2017,00,12,9,00);
-      var lastMeetDate = new Date(2017,2,29,19,00);
-      var lastHangoutsDate = new Date(2017,11,22,10,20);
       var currentDate = new Date();
 
       var lifeLength = Math.round(Math.abs((birthDate.getTime() - currentDate.getTime())/(oneDay)));
       var diffDays = Math.round(Math.abs((meetDate.getTime() - currentDate.getTime())/(oneDay)));
-      var daysSinceStandup = Math.round(Math.abs((lastHangoutsDate.getTime() - currentDate.getTime())/(oneDay)));
-      var datsSinceMeet = Math.round(Math.abs((lastMeetDate.getTime() - currentDate.getTime())/(oneDay)));
+
+      function daysSince(fromDate, toDate) {
+        return Math.round(Math.abs((fromDate.getTime() - toDate.getTime())/(oneDay)));
+      }
 
       var result = (diffDays / lifeLength) * 100;
+      var REAL_WORLD = 'rw';
+      var VIRTUAL_WORLD = 'vw';
+
+      var hist = [
+        {"world": REAL_WORLD, "from": new Date(2017,00,12,9,00), "to": new Date(2018,07,23,15,00)},
+        {"world": VIRTUAL_WORLD, "from": new Date(2017,11,22,10,20), "to": new Date(2018,07,23,15,00)},
+        {"world": REAL_WORLD, "from": new Date(2018,08,3,14,15), "to": new Date()},
+        {"world": VIRTUAL_WORLD, "from": new Date(2018,08,3,14,15), "to": new Date()}
+      ];
 
       $('p.progress_info').text(result.toFixed(2) + ' %');
       $('div.progress div').css('width', result.toFixed(2)+'%');
-      $('span.last_hangouts').text(daysSinceStandup.toFixed(0));
-      $('span.last_meet').text(datsSinceMeet.toFixed(0));
+      $('span.last_hangouts').text(
+        daysSince(hist[3]["from"], hist[3]["to"]).toFixed(2)
+      );
+      $('span.last_meet').text(
+        daysSince(hist[2]["from"], hist[2]["to"]).toFixed(2)
+      );
 
       var now = Math.floor(Date.now()/1000); //Current timestamp in seconds
       var clockStart = now - meetDate.getTime()/1000; //What to set the clock at when page loads
